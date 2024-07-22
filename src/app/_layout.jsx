@@ -10,8 +10,7 @@ export default function Layout() {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-            <Stack initialRouteName="index" >
-                <Stack.Screen name="index" options={{ headerShown: false }}/>
+            <Stack>
                 <Stack.Screen name="(auth)/signin" options={{title: "burak"}}/>
                 <Stack.Screen name="(auth)/signup" options={{ presentation: 'modal' }} />
             </Stack>
