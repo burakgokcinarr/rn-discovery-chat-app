@@ -1,6 +1,6 @@
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { useEffect } from "react";
-import { SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 
 export default function Layout() {
 
@@ -9,11 +9,15 @@ export default function Layout() {
     }, [])
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-            <Stack>
-                <Stack.Screen name="(auth)/signin" options={{title: "burak"}}/>
-                <Stack.Screen name="(auth)/signup" options={{ presentation: 'modal' }} />
-            </Stack>
-        </SafeAreaView>
+        <Stack screenOptions={{headerShown: false}}>
+            <Stack.Screen name="(auth)/signin" options={{}} />
+            <Stack.Screen name="(auth)/signup" options={{}} />
+        </Stack>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
