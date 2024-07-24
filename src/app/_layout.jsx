@@ -1,12 +1,12 @@
+import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { FontLoader } from "../config/FontConfig";
 
 export default function Layout() {
 
-    useEffect(() => {
-        //User Authotentication control
-    }, [])
+    const [loaded, error] = useFonts(FontLoader);
+
+    if (!loaded && !error) return null;
 
     return (
         <Stack screenOptions={{headerShown: false}}>
@@ -15,9 +15,3 @@ export default function Layout() {
         </Stack>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-})
