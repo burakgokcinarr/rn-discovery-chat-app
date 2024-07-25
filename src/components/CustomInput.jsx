@@ -2,7 +2,7 @@ import { StyleSheet, View, TextInput } from 'react-native'
 import React from 'react'
 import { Font } from '../constants'
 
-export default function CustomInput({ customStyle = {}, placeholderText = "E-Mail", onChangeText = null, isSecurity = false, keyboardType = "default", icon = null }) {
+export default function CustomInput({ customStyle = {}, placeholderText = "E-Mail", onChangeText = null, isSecurity = false, keyboardType = "default", icon = null, value = "" }) {
     return (
         <View style={styles.container}>
             {
@@ -10,11 +10,13 @@ export default function CustomInput({ customStyle = {}, placeholderText = "E-Mai
             }
             <TextInput
                 placeholder={placeholderText}
+                value={value}
                 style={[styles.inputContainer, customStyle]}
                 onChangeText={onChangeText}
                 secureTextEntry={isSecurity}
                 autoCorrect={false}
                 keyboardType={keyboardType}
+                textContentType="oneTimeCode"
             />
         </View>
     )
