@@ -4,6 +4,7 @@ import { Font } from '../../constants'
 import { CustomInput, CustomButton } from '../../components'
 import { Mail, LockKeyhole } from 'lucide-react-native'
 import { supabase } from '../../lib/supabase'
+import { router } from 'expo-router'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -48,7 +49,7 @@ export default function signin() {
                     />
                 <Text style={styles.subText}>
                     Don't have an account?{' '}
-                    <TouchableOpacity onPress={() => alert('Signup')}>
+                    <TouchableOpacity onPress={() => router.push("(auth)/signup")}>
                         <Text style={styles.signupText}>Sign up here</Text>
                     </TouchableOpacity>
                 </Text>

@@ -9,7 +9,7 @@ export default function Layout() {
     if (!loaded && !error) return null;
 
     return (
-        <Stack screenOptions={{headerShown: false}}>
+        <Stack screenOptions={{headerShown: false, gestureEnabled: false}}>
             <Stack.Screen name="(auth)/signin" options={{}} />
             <Stack.Screen name="(auth)/signup" options={{}} />
         </Stack>
