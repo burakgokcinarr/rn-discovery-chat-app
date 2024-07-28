@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Font } from '../../constants'
 import { CustomInput, CustomButton } from '../../components'
 import { Mail, LockKeyhole, User, TriangleAlert } from 'lucide-react-native'
-import { supabase } from '../../lib/supabase'
 import { router } from 'expo-router'
 import { Formik } from 'formik'
 import { SignupSchema } from '../../utility/ValidateSchema'
+import { signUpNewUser } from '../../api/Api'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -20,8 +20,12 @@ export default function signup() {
         password: ''
     }
 
-    const signUpClicked = (value) => {
-        console.log(value)
+    const signUpClicked = async(value) => {
+        const { session, error } = await signUpNewUser(value.email, value.password)
+
+        if (error) Alert.alert("Error", `${error.code} - ${error.message}`)
+        
+        if (session) console.log(session.user)  // session.user.id
     }
 
     return (
