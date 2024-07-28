@@ -7,6 +7,7 @@ import { router } from 'expo-router'
 import { Formik } from 'formik'
 import { SignupSchema } from '../../utility/ValidateSchema'
 import { signUpNewUser } from '../../api/Api'
+import { CustomAlert } from '../../utility/CustomAlert'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -21,11 +22,13 @@ export default function signup() {
     }
 
     const signUpClicked = async(value) => {
-        const { session, error } = await signUpNewUser(value.email, value.password)
-
-        if (error) Alert.alert("Error", `${error.code} - ${error.message}`)
         
-        if (session) console.log(session.user)  // session.user.id
+        const { session, error } = await signUpNewUser(value.email, value.password)
+        
+        if (error) CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
+        
+        //if (session) console.log(session.user)  // session.user.id
+        if (session) CustomAlert(false, "SUCCESS", "Success", "User registration successful. You can log in to the application.", "Ok", 2500, () => router.canGoBack() && router.back())
     }
 
     return (

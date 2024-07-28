@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { Font } from '../../constants'
 import { CustomInput, CustomButton } from '../../components'
 import { Mail, LockKeyhole } from 'lucide-react-native'
-import { supabase } from '../../lib/supabase'
 import { router } from 'expo-router'
+import { CustomAlert } from '../../utility/CustomAlert'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -18,8 +18,8 @@ export default function signin() {
         setForm({ ...form, [name]: value });
     };
 
-    const signInClicked = () => {
-        alert("signin")
+    const signInClicked = () => { 
+        CustomAlert(true, "SUCCESS", "Hello", "Congrats! this is toast notification success", 2000)
     }
 
     return (

@@ -1,6 +1,7 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { FontLoader } from "../config/FontConfig";
+import { AlertNotificationRoot } from 'react-native-alert-notification';
 
 export default function Layout() {
 
@@ -9,9 +10,11 @@ export default function Layout() {
     if (!loaded && !error) return null;
 
     return (
-        <Stack screenOptions={{headerShown: false, gestureEnabled: false}}>
-            <Stack.Screen name="(auth)/signin" options={{}} />
-            <Stack.Screen name="(auth)/signup" options={{}} />
-        </Stack>
+        <AlertNotificationRoot>
+            <Stack screenOptions={{headerShown: false, gestureEnabled: false}}>
+                <Stack.Screen name="(auth)/signin" options={{}} />
+                <Stack.Screen name="(auth)/signup" options={{}} />
+            </Stack>
+        </AlertNotificationRoot>
     )
 }
