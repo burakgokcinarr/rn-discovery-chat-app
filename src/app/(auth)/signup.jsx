@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         gap: 10,
         borderTopRightRadius: 50,
         backgroundColor: 'white',
-        height: height/2
+        height: height/1.6
     },
     title: {
         fontSize: 36,
