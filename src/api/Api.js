@@ -17,3 +17,15 @@ export const signInUser = async(email = '', password = '') => {
 
   return { data, error }
 }
+
+export const userCheckSessionControl = async() => {
+  const { data: { user } } = await supabase.auth.getUser()
+  
+  return user;
+}
+
+export const userLogOut = async() => {
+  const { error } = await supabase.auth.signOut()
+
+  return error
+}
