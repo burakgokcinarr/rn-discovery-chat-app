@@ -25,10 +25,9 @@ export default function signup() {
         
         const { session, error } = await signUpNewUser(value.email, value.password)
         
-        if (error) CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
+        if (error) return CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
         
-        //if (session) console.log(session.user)  // session.user.id
-        if (session) CustomAlert(false, "SUCCESS", "Success", "User registration successful. You can log in to the application.", "Ok", 2500, () => router.canGoBack() && router.back())
+        if (session) return CustomAlert(false, "SUCCESS", "Success", "User registration successful. You can log in to the application.", "Ok", 2500, () => router.canGoBack() && router.back())
     }
 
     return (

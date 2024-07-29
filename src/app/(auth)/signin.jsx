@@ -5,6 +5,7 @@ import { CustomInput, CustomButton } from '../../components'
 import { Mail, LockKeyhole } from 'lucide-react-native'
 import { router } from 'expo-router'
 import { CustomAlert } from '../../utility/CustomAlert'
+import { signInUser } from '../../api/Api'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -18,8 +19,13 @@ export default function signin() {
         setForm({ ...form, [name]: value });
     };
 
-    const signInClicked = () => { 
-        CustomAlert(true, "SUCCESS", "Hello", "Congrats! this is toast notification success", 2000)
+    const signInClicked = async() => { 
+        const { data, error } = await signInUser(form.email, form.password)
+        
+        if (error) return CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
+        
+        //if (session) console.log(session.user)  // session.user.id
+        if (data) return router.replace("(tabs)/contacts")
     }
 
     return (
@@ -30,11 +36,13 @@ export default function signin() {
                     <Text style={styles.title}>Log In</Text>
                     <CustomInput
                         placeholderText='E-Mail'
+                        value={form.email}
                         onChangeText={(text) => handleChange('email', text)}
                         icon={<Mail color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                     />
                     <CustomInput
                         placeholderText='Password'
+                        value={form.password}
                         onChangeText={(text) => handleChange('password', text)}
                         icon={<LockKeyhole color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                         isSecurity={true}

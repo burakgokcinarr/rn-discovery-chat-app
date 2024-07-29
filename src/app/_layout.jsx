@@ -11,7 +11,7 @@ export default function Layout() {
 
     return (
         <AlertNotificationRoot>
-            <Stack screenOptions={{headerShown: false, gestureEnabled: false}}>
+            <Stack screenOptions={{ headerShown: false, gestureEnabled: false, headerShadowVisible: false }} >
                 <Stack.Screen name="(auth)/signin" options={{}} />
                 <Stack.Screen name="(auth)/signup" options={{}} />
             </Stack>
