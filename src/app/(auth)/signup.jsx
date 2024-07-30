@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react'
 import { Font } from '../../constants'
 import { CustomInput, CustomButton } from '../../components'
 import { Mail, LockKeyhole, User, TriangleAlert } from 'lucide-react-native'
@@ -14,7 +14,7 @@ const BG_IMAGE   = require('../../../assets/bg.webp');
 const { height } = Dimensions.get('window');
 
 export default function signup() {
-
+    
     const initialValue = {
         username: '',
         email: '',

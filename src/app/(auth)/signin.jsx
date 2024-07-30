@@ -6,6 +6,8 @@ import { Mail, LockKeyhole } from 'lucide-react-native'
 import { router } from 'expo-router'
 import { CustomAlert } from '../../utility/CustomAlert'
 import { signInUser } from '../../api/Api'
+import { useDispatch } from 'react-redux'
+import { setSession } from '../../redux/slices/authSlice'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -13,6 +15,7 @@ const { height } = Dimensions.get('window');
 
 export default function signin() {
 
+    const dispatch        = useDispatch();
     const [form, setForm] = useState({email: "", password: ""})
 
     const handleChange = (name, value) => {
@@ -24,8 +27,11 @@ export default function signin() {
         
         if (error) return CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
         
-        //if (session) console.log(session.user)  // session.user.id
-        if (data) return router.replace("(tabs)/contacts")
+        if (data.session.user) {
+            console.log(data.session.user)
+            dispatch(setSession(data.session.user))
+            return router.replace("(tabs)/contacts")
+        }
     }
 
     return (

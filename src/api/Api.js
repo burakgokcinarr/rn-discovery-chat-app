@@ -19,9 +19,9 @@ export const signInUser = async(email = '', password = '') => {
 }
 
 export const userCheckSessionControl = async() => {
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { user }, error } = await supabase.auth.getUser()
   
-  return user;
+  return { user, error };
 }
 
 export const userLogOut = async() => {

@@ -1,13 +1,16 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { userLogOut } from '../../api/Api'
+import { logout } from '../../redux/slices/authSlice'
+import { useDispatch } from 'react-redux'
 
 export default function contacts() {
 
-  const logout = async() => {
-    const data = await userLogOut()
+  const dispatch = useDispatch();
 
-    console.log(data)
+  const logout = async() => {
+    const error = await userLogOut()
+    if (!error) dispatch(logout());
   }
 
   return (
