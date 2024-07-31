@@ -28,7 +28,6 @@ export default function signin() {
         if (error) return CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
         
         if (data.session.user) {
-            console.log(data.session.user)
             dispatch(setSession(data.session.user))
             return router.replace("(tabs)/contacts")
         }
