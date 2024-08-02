@@ -6,7 +6,7 @@ import { Mail, LockKeyhole, User, TriangleAlert } from 'lucide-react-native'
 import { router } from 'expo-router'
 import { Formik } from 'formik'
 import { SignupSchema } from '../../utility/ValidateSchema'
-import { signUpNewUser } from '../../api/Api'
+import { signUpNewUser, insertData } from '../../api/Api'
 import { CustomAlert } from '../../utility/CustomAlert'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
@@ -27,7 +27,14 @@ export default function signup() {
         
         if (error) return CustomAlert(false, "DANGER", "Error", `${error.code} - ${error.message}`, "Close", 2500)
         
-        if (session) return CustomAlert(false, "SUCCESS", "Success", "User registration successful. You can log in to the application.", "Ok", 2500, () => router.canGoBack() && router.back())
+        if (session) {
+            const userInfo  = { username: value.username, password: value.password, email: value.email, useruuid: session.user.id }
+            const { error: insertError } = await insertData('tbl_User', userInfo)
+
+            if (!insertError) return CustomAlert(false, "SUCCESS", "Success", "User registration successful. You can log in to the application.", "Ok", 2000, () => router.canGoBack() && router.back())
+        } 
+
+        return CustomAlert(false, "DANGER", "Error", "An error has occurred. Please try again later.", "Ok", 2500)
     }
 
     return (
