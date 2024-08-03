@@ -1,13 +1,14 @@
 import { Button, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { userLogOut } from '../../api/Api'
 import { logout } from '../../redux/slices/authSlice'
 import { useDispatch } from 'react-redux'
-import { router } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 
 export default function contacts() {
 
-  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const dispatch   = useDispatch();
 
   const logoutUser = async() => {
     const error = await userLogOut()
@@ -16,6 +17,18 @@ export default function contacts() {
       router.replace("(auth)/signin")
     }
   }
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={() => alert('This is a button!')}
+          title="Info"
+          color="red"
+        />
+      ),
+    })
+  }, [])
 
   return (
     <View style={styles.container}>

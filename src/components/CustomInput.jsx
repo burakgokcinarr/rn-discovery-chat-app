@@ -15,6 +15,7 @@ export default function CustomInput({ customStyle = {}, placeholderText = "E-Mai
                 onChangeText={onChangeText}
                 secureTextEntry={isSecurity}
                 autoCorrect={false}
+                autoCapitalize="none"
                 keyboardType={keyboardType}
                 textContentType="oneTimeCode"
             />
