@@ -17,6 +17,7 @@ export default function Layout() {
                 <Stack screenOptions={{ headerShown: false, gestureEnabled: false, headerShadowVisible: false }} >
                     <Stack.Screen name="(auth)/signin" options={{}} />
                     <Stack.Screen name="(auth)/signup" options={{}} />
+                    <Stack.Screen name="profile" options={{ headerShown: true, headerBackTitleVisible: false, title: '' }} />
                 </Stack>
             </AlertNotificationRoot>
         </Provider>
