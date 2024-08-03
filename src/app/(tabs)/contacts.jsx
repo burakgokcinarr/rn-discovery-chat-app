@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from 'expo-router'
-import { readData } from '../../api/Api'
+import { readData, fetchFilteredUsers } from '../../api/Api'
 
 export default function contacts() {
 
@@ -15,7 +15,8 @@ export default function contacts() {
   }, [])
 
   const allUserData = async() => {
-    const data = await readData("tbl_User", "*", userInfo.id)
+    const filter = [{ type: 'neq', column: 'useruuid', value: userInfo.id }]
+    const data = await readData("tbl_User", "*", filter)
 
     console.log(data)
   }
