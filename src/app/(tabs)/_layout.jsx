@@ -36,14 +36,14 @@ export default function TabLayout() {
                 name="contacts"
                 options={{
                     title: 'Contacts',
-                    tabBarIcon: ({ color, focused }) => <User color={focused ? "#FF7841" : "#000000"} size={28} fill={focused ? "#FF7841" : "#000000"}/>
+                    tabBarIcon: ({ color, focused }) => <User color={focused ? "#FF7841" : "#000000"} size={28} />
                 }}
             />
             <Tabs.Screen
                 name="chats"
                 options={{
                     title: 'Chats',
-                    tabBarIcon: ({ color, focused }) => <MessageCircle color={focused ? "#FF7841" : "#000000"} size={28} fill={focused ? "#FF7841" : "#000000"}/>,
+                    tabBarIcon: ({ color, focused }) => <MessageCircle color={focused ? "#FF7841" : "#000000"} size={28} />,
                 }}
             />
         </Tabs>
