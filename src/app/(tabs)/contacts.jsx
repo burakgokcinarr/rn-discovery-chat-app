@@ -25,7 +25,7 @@ export default function contacts() {
 
   return (
     <View style={styles.container}>
-       <FlatList
+      <FlatList
         data={userList}
         renderItem={({item}) => <UserCard componentType={1} userInfo={item} />}
         keyExtractor={item => item.id}
