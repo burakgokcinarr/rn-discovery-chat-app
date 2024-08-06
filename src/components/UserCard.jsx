@@ -11,43 +11,43 @@ export default function UserCard({ componentType = 1, userInfo = null, lastSeenD
     return (
         <TouchableOpacity onPress={() => router.push({pathname: `chats/${userInfo.useruuid}`, params: {user: JSON.stringify(userInfo)}})}>
             <View style={styles.container}>
-            <View style={styles.userInfo}>
-                <Image
-                    style={styles.photo}
-                    source={`https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 30) + 1}.jpg`}
-                    contentFit="cover"
-                />
-                <View>
-                    <Text style={styles.title}>{userInfo.username}</Text>
+                <View style={styles.userInfo}>
+                    <Image
+                        style={styles.photo}
+                        source={`https://randomuser.me/api/portraits/men/${Math.floor(Math.random() * 30) + 1}.jpg`}
+                        contentFit="cover"
+                    />
+                    <View>
+                        <Text style={styles.title}>{userInfo.username}</Text>
+                        {
+                            componentType === 1 
+                            ? (
+                                <Text style={styles.lastSeenText}>last seen recently</Text>
+                            )
+                            : (
+                                <Text style={styles.lastSeenText}>{lastMessage}</Text>
+                            )
+                        }
+                    </View>
+                </View>
+                <View style={styles.timeView}>
                     {
                         componentType === 1 
                         ? (
-                            <Text style={styles.lastSeenText}>last seen recently</Text>
-                        )
+                            <Text style={styles.timeMessage}>Message</Text>
+                        ) 
                         : (
-                            <Text style={styles.lastSeenText}>{lastMessage}</Text>
+                            <Text style={styles.time}>2 min ago</Text>
+                        )
+                    }
+                    {
+                        componentType === 2 && (
+                            <View style={styles.notification}>
+                                <Text style={styles.notificationText}>{lastMessageCount}</Text>
+                            </View>
                         )
                     }
                 </View>
-            </View>
-            <View style={styles.timeView}>
-                {
-                    componentType === 1 
-                    ? (
-                        <Text style={styles.timeMessage}>Message</Text>
-                    ) 
-                    : (
-                        <Text style={styles.time}>2 min ago</Text>
-                    )
-                }
-                {
-                    componentType === 2 && (
-                        <View style={styles.notification}>
-                            <Text style={styles.notificationText}>{lastMessageCount}</Text>
-                        </View>
-                    )
-                }
-            </View>
             </View>
         </TouchableOpacity>
     )

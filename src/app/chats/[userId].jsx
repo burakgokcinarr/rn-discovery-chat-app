@@ -1,16 +1,22 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
-import { router, useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
+import React, { useState, useCallback, useEffect } from 'react'
+import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
 import { ChevronLeft, Video, Phone } from 'lucide-react-native'
 import { Image } from 'expo-image'
 import { Font } from '../../constants'
+import { useSelector } from 'react-redux'
+import { GiftedChat, Bubble } from 'react-native-gifted-chat'
+import { insertData, subscribeDataWithTable, readData } from '../../api/Api'
+import { CustomAlert } from '../../utility/CustomAlert'
 
 export default function ChatScreen() {
 
-    const navigation = useNavigation()
-    const router     = useRouter()
-    const { userId, user } = useLocalSearchParams()
-    const userDetail = JSON.parse(user)
+    const navigation        = useNavigation()
+    const router            = useRouter()
+    const { userId, user }  = useLocalSearchParams()
+    const userDetail        = JSON.parse(user)
+    const userInfo          = useSelector((state) => state.auth.user)
+    const [messages, setMessages] = useState([])
     
     useEffect(() => {
         navigation.setOptions({
@@ -33,6 +39,31 @@ export default function ChatScreen() {
         })
     }, [])
 
+    useEffect(() => {
+        /*
+        setMessages([
+            {
+                _id: 1,
+                text: 'Hello developer',
+                createdAt: new Date(),
+                user: {
+                    _id: 2,
+                    name: 'React Native'
+                },
+            },
+        ])
+        */
+        getAllMessage();
+    }, [])
+
+    useEffect(() => {
+        const unsubscribe = subscribeDataWithTable('INSERT', 'tbl_Messages').channels.on('postgres_changes', (payload) => {
+            console.log('Change received!', payload);
+        });
+
+        return () => unsubscribe();
+    }, [])
+
     const HeaderTitle = () => {
         return (
             <View style={styles.headerTitleView}>
@@ -48,11 +79,81 @@ export default function ChatScreen() {
             </View>
         )
     }
+
+    const getAllMessage = async() => {
+
+        const filter = [
+                        { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`}
+                        ,{ type: 'or', value: `sender_id.eq.${userId},receiver_id.eq.${userId}`}
+                    ]
+        const { data, error } = await readData("tbl_Messages", "*", filter)
+
+        if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+
+        if(data) {
+            //console.log(data)
+            const giffed_message = Array();
+            data.map((mess) => {
+                const mes = {
+                    _id: mess.id,
+                    text: mess.message_text,
+                    createdAt: new Date(mess.created_at),
+                    user: { _id: mess.sender_id }
+                }
+                giffed_message.push(mes);
+            })
+
+            setMessages(giffed_message.reverse());
+        }
+    }
+
+    const onSend = useCallback(async(messages = []) => {
+        const { error } = await insertData('tbl_Messages', {
+            sender_id: userInfo.id,
+            receiver_id: userId,
+            message_text: messages[0].text,
+            is_read: false
+        })
+
+        if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+        else setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    }, [])
     
     return (
-    <View style={styles.container}>
-        <Text>{userId}</Text>
-    </View>
+        <SafeAreaView style={{flex: 1}}>
+            <GiftedChat
+                messages={messages}
+                renderBubble={props => {
+                    return (
+                        <Bubble
+                            {...props}
+                            textStyle={{
+                                right: styles.messageRigthText,
+                                left: styles.messageLeftText,
+                            }}
+                            wrapperStyle={{
+                                left: {
+                                    backgroundColor: '#F5F5F5',
+                                },
+                                right: {
+                                    backgroundColor: "#FF9134",
+                                },
+                            }}
+                        />
+                    );
+                }}             
+                onSend={messages => onSend(messages)}
+                user={{
+                    _id: userInfo.id,
+                    name: userInfo.username
+                }}
+                messagesContainerStyle={{backgroundColor: '#FFFFFF'}}
+                showUserAvatar={false}
+                alwaysShowSend
+                placeholder='Type something...'
+                isTyping={false}
+        />
+        </SafeAreaView>
     )
 }
 
@@ -91,5 +192,13 @@ const styles = StyleSheet.create({
     headerRightView: {
         flexDirection: 'row',
         gap: 5
+    },
+    messageRigthText: {
+        color: '#FFFFFF',
+        fontFamily: Font.medium
+    },
+    messageLeftText: {
+        color: '#000000',
+        fontFamily: Font.medium
     }
 })

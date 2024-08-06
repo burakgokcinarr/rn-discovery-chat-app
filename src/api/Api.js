@@ -110,6 +110,9 @@ const applyFilters = (query, filters) => {
       case 'containedBy':
         query = query.containedBy(column, value);
         break;
+      case 'or':
+        query = query.or(value);
+        break;
       default:
         break;
     }
@@ -117,3 +120,18 @@ const applyFilters = (query, filters) => {
 
   return query;
 };
+
+export const subscribeDataWithTable = (eventType = 'INSERT', tableName = '') => {
+  
+  const channels = supabase.channel('custom-insert-channel')
+  .on(
+    'postgres_changes',
+    { event: eventType, schema: 'public', table: tableName },
+    (payload) => {
+      //console.log('Change received!', payload)
+    }
+  )
+  .subscribe()
+
+  return { supabase, channels }
+}
