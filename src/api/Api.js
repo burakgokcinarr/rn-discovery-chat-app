@@ -120,18 +120,3 @@ const applyFilters = (query, filters) => {
 
   return query;
 };
-
-export const subscribeDataWithTable = (eventType = 'INSERT', tableName = '') => {
-  
-  const channels = supabase.channel('custom-insert-channel')
-  .on(
-    'postgres_changes',
-    { event: eventType, schema: 'public', table: tableName },
-    (payload) => {
-      //console.log('Change received!', payload)
-    }
-  )
-  .subscribe()
-
-  return { supabase, channels }
-}

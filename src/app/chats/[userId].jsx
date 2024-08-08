@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
-import { ChevronLeft, Video, Phone } from 'lucide-react-native'
+import { ChevronLeft, Video, Phone, Send as SendIcon  } from 'lucide-react-native'
 import { Image } from 'expo-image'
 import { Font } from '../../constants'
 import { useSelector } from 'react-redux'
-import { GiftedChat, Bubble } from 'react-native-gifted-chat'
-import { insertData, subscribeDataWithTable, readData } from '../../api/Api'
+import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
+import { insertData, readData } from '../../api/Api'
 import { CustomAlert } from '../../utility/CustomAlert'
+import { supabase } from '../../lib/supabase'
 
 export default function ChatScreen() {
 
@@ -40,28 +41,8 @@ export default function ChatScreen() {
     }, [])
 
     useEffect(() => {
-        /*
-        setMessages([
-            {
-                _id: 1,
-                text: 'Hello developer',
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: 'React Native'
-                },
-            },
-        ])
-        */
         getAllMessage();
-    }, [])
-
-    useEffect(() => {
-        const unsubscribe = subscribeDataWithTable('INSERT', 'tbl_Messages').channels.on('postgres_changes', (payload) => {
-            console.log('Change received!', payload);
-        });
-
-        return () => unsubscribe();
+        messageSubscribe();
     }, [])
 
     const HeaderTitle = () => {
@@ -78,6 +59,36 @@ export default function ChatScreen() {
                 </View>
             </View>
         )
+    }
+
+    const messageSubscribe = () => {
+        const chatsWatcher = supabase.channel('sender_id')
+        .on(
+            'postgres_changes',
+            { event: 'INSERT', schema: 'public', table: 'tbl_Messages' },
+            async (payload) => {
+                //console.log('chats changed', payload.new);
+                
+                const messages = payload.new;
+
+                if (messages.sender_id === userId) {
+                    const newMessage = {
+                        _id: messages.id,
+                        text: messages.message_text,
+                        createdAt: new Date(messages.created_at),
+                        user: { 
+                                _id: messages.sender_id 
+                            }
+                    }
+                    setMessages((prev) => [newMessage, ...prev]);
+                }
+            }
+        )
+        .subscribe()
+
+        return () => {
+            supabase.removeChannel(chatsWatcher);
+        }
     }
 
     const getAllMessage = async() => {
@@ -108,6 +119,7 @@ export default function ChatScreen() {
     }
 
     const onSend = useCallback(async(messages = []) => {
+        console.log(messages)
         const { error } = await insertData('tbl_Messages', {
             sender_id: userInfo.id,
             receiver_id: userId,
@@ -120,7 +132,7 @@ export default function ChatScreen() {
     }, [])
     
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
             <GiftedChat
                 messages={messages}
                 renderBubble={props => {
@@ -152,6 +164,16 @@ export default function ChatScreen() {
                 alwaysShowSend
                 placeholder='Type something...'
                 isTyping={false}
+                renderSend={(props)=>{
+                    return (
+                        <Send {...props} containerStyle={styles.sendButton}>
+                            <View style={{backgroundColor: '#F5F5F5', padding: 8, borderRadius: 10}}>
+                                <SendIcon size={30} color="#FF9134"/>
+                            </View>
+                        </Send>
+                    )
+                }
+                } 
         />
         </SafeAreaView>
     )
@@ -200,5 +222,9 @@ const styles = StyleSheet.create({
     messageLeftText: {
         color: '#000000',
         fontFamily: Font.medium
+    },
+    sendButton: {
+        justifyContent: 'center', 
+        alignItems: 'center'
     }
 })
