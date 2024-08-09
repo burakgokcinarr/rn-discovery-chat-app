@@ -17,6 +17,7 @@ export default function ChatScreen() {
     const { userId, user }  = useLocalSearchParams()
     const userDetail        = JSON.parse(user)
     const userInfo          = useSelector((state) => state.auth.user)
+    const chatThemeColor    = useSelector((state) => state.chatTheme.chatBubble)
     const [messages, setMessages] = useState([])
     
     useEffect(() => {
@@ -148,7 +149,7 @@ export default function ChatScreen() {
                                     backgroundColor: '#F5F5F5',
                                 },
                                 right: {
-                                    backgroundColor: "#FF9134",
+                                    backgroundColor: chatThemeColor,
                                 },
                             }}
                         />
