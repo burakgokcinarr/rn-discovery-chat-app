@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ActivityIndicator } from 'react-native'
 import React, { useState, useCallback, useEffect } from 'react'
 import { useLocalSearchParams, useNavigation, useRouter } from 'expo-router'
 import { ChevronLeft, Video, Phone, Send as SendIcon  } from 'lucide-react-native'
@@ -18,7 +18,8 @@ export default function ChatScreen() {
     const userDetail        = JSON.parse(user)
     const userInfo          = useSelector((state) => state.auth.user)
     const chatThemeColor    = useSelector((state) => state.chatTheme.chatBubble)
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages]   = useState([])
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
         navigation.setOptions({
@@ -94,28 +95,34 @@ export default function ChatScreen() {
 
     const getAllMessage = async() => {
 
-        const filter = [
-                        { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`}
-                        ,{ type: 'or', value: `sender_id.eq.${userId},receiver_id.eq.${userId}`}
-                    ]
-        const { data, error } = await readData("tbl_Messages", "*", filter)
+        try {
+            const filter = [
+                { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`}
+                ,{ type: 'or', value: `sender_id.eq.${userId},receiver_id.eq.${userId}`}
+            ]
+            const { data, error } = await readData("tbl_Messages", "*", filter)
 
-        if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+            if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
 
-        if(data) {
-            //console.log(data)
-            const giffed_message = Array();
-            data.map((mess) => {
-                const mes = {
-                    _id: mess.id,
-                    text: mess.message_text,
-                    createdAt: new Date(mess.created_at),
-                    user: { _id: mess.sender_id }
-                }
-                giffed_message.push(mes);
-            })
+            if(data) {
+                //console.log(data)
+                const giffed_message = Array();
+                data.map((mess) => {
+                    const mes = {
+                        _id: mess.id,
+                        text: mess.message_text,
+                        createdAt: new Date(mess.created_at),
+                        user: { _id: mess.sender_id }
+                    }
+                    giffed_message.push(mes);
+                })
 
-            setMessages(giffed_message.reverse());
+                setMessages(giffed_message.reverse());
+            }
+        } catch (error) {
+            return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -131,6 +138,14 @@ export default function ChatScreen() {
         if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
         else setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
     }, [])
+
+    if (isLoading) {
+        return (
+          <View style={styles.container}>
+            <ActivityIndicator size="small" color="#FF9134"/>
+          </View>
+        )
+    }
     
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>

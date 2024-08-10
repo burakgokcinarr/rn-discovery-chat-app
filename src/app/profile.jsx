@@ -20,7 +20,7 @@ export default function profile() {
 
   const colors = [
     '#FF9134', '#33FF57', '#3357FF', '#FF33A1', '#33FFA1', '#A133FF', 
-    '#FFAA33', '#33AAFF', '#FF5733', '#5733FF', '#FF3333', '#33FF33', 
+    '#FFAA33', '#33AAFF', '#fcba03', '#d7fc03', '#5afc03', '#33FF33', 
     '#FF5733', '#3333FF', '#33FFA1', '#FF33FF', '#5733FF', '#AA33FF',
     '#FF33AA', '#33FFAA'
   ];

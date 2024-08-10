@@ -1,4 +1,4 @@
-import { Button, StyleSheet, FlatList, View } from 'react-native'
+import { StyleSheet, FlatList, View, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from 'expo-router'
@@ -11,16 +11,30 @@ export default function contacts() {
   const dispatch   = useDispatch();
   const userInfo   = useSelector((state) => state.auth.user)
   const [userList, setUserList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     allUserData(); 
   }, [])
 
   const allUserData = async() => {
-    const filter = [{ type: 'neq', column: 'useruuid', value: userInfo.id }]
-    const {data} = await readData("tbl_User", "*", filter)
-    setUserList(data);
-    //console.log(data)
+    try {
+      const filter = [{ type: 'neq', column: 'useruuid', value: userInfo.id }]
+      const {data} = await readData("tbl_User", "*", filter)
+      setUserList(data);
+    } catch (error) {
+      console.log("error = ", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="small" color="#FF9134"/>
+      </View>
+    )
   }
 
   return (
