@@ -94,7 +94,6 @@ export default function ChatScreen() {
     }
 
     const getAllMessage = async() => {
-
         try {
             const filter = [
                 { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`}
@@ -112,7 +111,7 @@ export default function ChatScreen() {
                         _id: mess.id,
                         text: mess.message_text,
                         createdAt: new Date(mess.created_at),
-                        user: { _id: mess.sender_id }
+                        user: { _id: mess.sender_id,name: userDetail.username }
                     }
                     giffed_message.push(mes);
                 })
@@ -183,9 +182,7 @@ export default function ChatScreen() {
                 renderSend={(props)=>{
                     return (
                         <Send {...props} containerStyle={styles.sendButton}>
-                            <View style={{backgroundColor: '#F5F5F5', padding: 8, borderRadius: 10}}>
-                                <SendIcon size={30} color="#FF9134"/>
-                            </View>
+                            <SendIcon size={30} color={chatThemeColor}/>
                         </Send>
                     )
                 }
@@ -241,6 +238,7 @@ const styles = StyleSheet.create({
     },
     sendButton: {
         justifyContent: 'center', 
-        alignItems: 'center'
+        alignItems: 'center',
+        marginRight: 10
     }
 })

@@ -8,6 +8,7 @@ import { CustomButton } from '../components'
 import { ChevronLeft } from 'lucide-react-native'
 import { Font } from '../constants'
 import { setChatBubble } from '../redux/slices/chatTheme'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const { width } = Dimensions.get('window');
 
@@ -45,7 +46,12 @@ export default function profile() {
 
   const chatBubbleThemeSelect = async(color) => {
     setSelectedColor(color)
-    dispatch(setChatBubble(color))
+    try {
+      await AsyncStorage.setItem('bubble', color)
+      dispatch(setChatBubble(color))
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
