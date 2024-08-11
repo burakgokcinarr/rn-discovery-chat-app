@@ -5,7 +5,7 @@ import { router, useNavigation } from 'expo-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/slices/authSlice'
 import { CustomButton } from '../components'
-import { ChevronLeft } from 'lucide-react-native'
+import { X } from 'lucide-react-native'
 import { Font } from '../constants'
 import { setChatBubble } from '../redux/slices/chatTheme'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -18,7 +18,7 @@ export default function profile() {
   const navigation  = useNavigation()
   const userInfo    = useSelector((state) => state.auth.user)
   const [selectedColor, setSelectedColor] = useState("#FF9134");
-
+  
   const colors = [
     '#FF9134', '#33FF57', '#3357FF', '#FF33A1', '#33FFA1', '#A133FF', 
     '#FFAA33', '#33AAFF', '#fcba03', '#d7fc03', '#5afc03', '#33FF33', 
@@ -30,11 +30,24 @@ export default function profile() {
     navigation.setOptions({
       headerLeft: () => (
           <TouchableOpacity style={styles.headerLeftView} onPress={() => router.canGoBack() && router.back()}>
-              <ChevronLeft size="30" color="#A3A3A3" />
+              <X size="30" color="#A3A3A3" />
           </TouchableOpacity>
       ),
-  })
+    })
+
+    getChatBubbleColor();
   }, [])
+
+  const getChatBubbleColor = async() => {
+    try {
+      const value = await AsyncStorage.getItem('bubble');
+      if (value !== null) {
+        setSelectedColor(value)
+      }
+    } catch (e) {
+      // error reading value
+    }
+  }
 
   const logoutUser = async() => {
     const error = await userLogOut()
@@ -57,7 +70,7 @@ export default function profile() {
   return (
     <View style={styles.container}>
       <Text style={styles.emailText}>Message Bubble Color Theme</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flexWrap: 'wrap'}}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {colors.map((color, index) => (
           <TouchableOpacity
             key={index}
@@ -70,6 +83,7 @@ export default function profile() {
           />
         ))}
       </ScrollView>
+      <Text style={styles.emailText}>{userInfo.email}</Text>
       <CustomButton
         title={`Logout`}
         onPressed={logoutUser}
