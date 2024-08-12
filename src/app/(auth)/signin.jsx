@@ -52,7 +52,7 @@ export default function signin() {
                         icon={<LockKeyhole color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                         isSecurity={true}
                     />
-                    <TouchableOpacity style={{alignSelf: 'flex-end', marginHorizontal: 30}} onPress={() => alert("forgot pass")}>
+                    <TouchableOpacity style={{alignSelf: 'flex-end', marginHorizontal: 30}} onPress={() => router.push("(auth)/forgot")}>
                         <Text style={styles.forgetPassword}>Forgot Password</Text>
                     </TouchableOpacity>
                     <CustomButton

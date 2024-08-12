@@ -20,19 +20,20 @@ export default function chats() {
   const allChatsData = async() => {
     const filter = [ { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`} ]
 
-    const { data, error } = await readData("tbl_Messages", "*", filter)
-    
-    if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
-
-    if (data) {
-      const filter = [ { type: 'or', value: `useruuid.eq.${data[0].sender_id},useruuid.eq.${data[0].receiver_id}`} ]
-
-      const { data, error } = await readData("tbl_User", "*", filter)
-      console.log(data)
-      if (data) {
-        setChatList(data)
-      }
+    const { data, error } = await readData("tbl_Messages", "sender_id, receiver_id", filter)
   
+    if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+    
+    if (data) {
+      const uniqueUserIds = [...new Set(data.flatMap(message => message.sender_id === userInfo.id ? message.receiver_id : message.sender_id ))];
+      //console.log(uniqueUserIds)
+      const filter = [ { type: 'in', column: 'useruuid', value: uniqueUserIds} ]
+
+      const { data:users, erro:userError } = await readData("tbl_User", "*", filter)
+      //console.log(users)
+      if (userError) return CustomAlert(false, "DANGER", "Error", userError.code + " - " + userError.message, "Ok", 2000)
+
+      if (users) setChatList(users)
     }
   }
 

@@ -120,3 +120,19 @@ const applyFilters = (query, filters) => {
 
   return query;
 };
+
+export const resetPasswordWithEmail = async(email = "") => {
+  let { data, error } = await supabase.auth.resetPasswordForEmail(email)
+
+  return { data, error }
+}
+
+export const resetPasswordAfferUpdateUser = async(email = "", newPassword = "") => {
+
+  const { data, error } = await supabase.auth.updateUser({
+    email: email,
+    password: newPassword
+  })
+  
+  return { data, error }
+}

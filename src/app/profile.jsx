@@ -83,7 +83,7 @@ export default function profile() {
           />
         ))}
       </ScrollView>
-      <Text style={styles.emailText}>{userInfo.email}</Text>
+      <Text style={styles.emailText}>{userInfo?.email}</Text>
       <CustomButton
         title={`Logout`}
         onPressed={logoutUser}
