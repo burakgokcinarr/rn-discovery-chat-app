@@ -16,3 +16,10 @@ export const SignupSchema = Yup.object().shape({
         .email('Invalid email')
         .required('Email is required'),
 });
+
+export const ForgotPasswordSchema = Yup.object().shape({
+    email: Yup
+        .string()
+        .email('Invalid email')
+        .required('Email is required'),
+});
