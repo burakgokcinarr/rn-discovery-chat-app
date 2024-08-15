@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform, Alert } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, Dimensions, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native'
 import React from 'react'
 import { Font } from '../../constants'
 import { CustomInput, CustomButton } from '../../components'
@@ -8,6 +8,7 @@ import { Formik } from 'formik'
 import { SignupSchema } from '../../utility/ValidateSchema'
 import { signUpNewUser, insertData } from '../../api/Api'
 import { CustomAlert } from '../../utility/CustomAlert'
+import { useTranslation } from 'react-i18next'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -15,6 +16,7 @@ const { height } = Dimensions.get('window');
 
 export default function signup() {
     
+    const { t }        = useTranslation();
     const initialValue = {
         username: '',
         email: '',
@@ -48,23 +50,23 @@ export default function signup() {
                 >
                     {({ handleChange, handleSubmit, errors, touched, isValid, values }) => (
                         <View style={styles.inputContainer}>
-                            <Text style={styles.title}>Sign Up</Text>
+                            <Text style={styles.title}>{t("signUp.signup")}</Text>
                             <CustomInput
-                                placeholderText='Nick Name'
+                                placeholderText={t("signUp.nickname")}
                                 value={values.username}
                                 onChangeText={handleChange('username')}
                                 icon={<User color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                             />
                             { errors.username && touched.username && <Text style={styles.formErrorText}><TriangleAlert color="red" size={9}/> {errors.username}</Text> }
                             <CustomInput
-                                placeholderText='E-Mail'
+                                placeholderText={t("signUp.email")}
                                 value={values.email}
                                 onChangeText={handleChange('email')}
                                 icon={<Mail color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                             />
                             { errors.email && touched.email && <Text style={styles.formErrorText}><TriangleAlert color="red" size={9}/> {errors.email}</Text> }
                             <CustomInput
-                                placeholderText='Password'
+                                placeholderText={t("signUp.password")}
                                 value={values.password}
                                 onChangeText={handleChange('password')}
                                 icon={<LockKeyhole color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
@@ -72,14 +74,14 @@ export default function signup() {
                             />
                             { errors.password && touched.password && <Text style={styles.formErrorText}><TriangleAlert color="red" size={9}/> {errors.password}</Text> }
                             <CustomButton
-                                title='Sign Up'
+                                title={t("signUp.signup")}
                                 customStyle={{marginTop: 15}}
                                 onPressed={handleSubmit}
                             />
                             <Text style={styles.subText}>
-                                Do you have an account?{' '}
+                                {t("signUp.account")}{' '}
                                 <TouchableOpacity onPress={() => router.back()}>
-                                    <Text style={styles.signupText}>Login here</Text>
+                                    <Text style={styles.signupText}>{t("signUp.signin")}</Text>
                                 </TouchableOpacity>
                             </Text>
                         </View>

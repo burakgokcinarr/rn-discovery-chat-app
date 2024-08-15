@@ -2,9 +2,11 @@ import { router, Tabs } from 'expo-router';
 import { User, MessageCircle, Plus, Cog } from 'lucide-react-native';
 import { Font } from '../../constants'
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Image } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+
+    const { t } = useTranslation();
 
     const tabBarConstantsStyle = {
         tabBarActiveTintColor: '#FF7841',
@@ -18,7 +20,7 @@ export default function TabLayout() {
             </View>
         ),
         headerRight: () => (
-            <TouchableOpacity onPress={() => router.push("profile")}>
+            <TouchableOpacity onPress={() => router.push("profile")} style={{marginRight: 8}}>
                 <Cog size={30} color={"#A3A3A3"}/>
             </TouchableOpacity>
         ),
@@ -30,14 +32,14 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="contacts"
                 options={{
-                    title: 'Contacts',
+                    title: t("contact.title"),
                     tabBarIcon: ({ color, focused }) => <User color={focused ? "#FF7841" : "#000000"} size={28} />
                 }}
             />
             <Tabs.Screen
                 name="chats"
                 options={{
-                    title: 'Chats',
+                    title: t("chat.title"),
                     tabBarIcon: ({ color, focused }) => <MessageCircle color={focused ? "#FF7841" : "#000000"} size={28} />,
                 }}
             />

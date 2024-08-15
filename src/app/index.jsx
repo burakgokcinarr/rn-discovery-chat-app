@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userCheckSessionControl } from '../api/Api'
 import { setSession } from '../redux/slices/authSlice'
 import { ActivityIndicator, View } from 'react-native'
+import "../localization/_i18n";
 
 export default function index() {
 

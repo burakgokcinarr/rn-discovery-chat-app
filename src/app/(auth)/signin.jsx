@@ -8,6 +8,7 @@ import { CustomAlert } from '../../utility/CustomAlert'
 import { signInUser } from '../../api/Api'
 import { useDispatch } from 'react-redux'
 import { setSession } from '../../redux/slices/authSlice'
+import { useTranslation } from 'react-i18next'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
@@ -15,6 +16,7 @@ const { height } = Dimensions.get('window');
 
 export default function signin() {
 
+    const { t }           = useTranslation();
     const dispatch        = useDispatch();
     const [form, setForm] = useState({email: "", password: ""})
 
@@ -38,32 +40,32 @@ export default function signin() {
             <View style={styles.container}>
                 <ImageBackground source={BG_IMAGE} style={styles.bgImage}/>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.title}>Log In</Text>
+                    <Text style={styles.title}>{t("signIn.loginTitle")}</Text>
                     <CustomInput
-                        placeholderText='E-Mail'
+                        placeholderText={t("signIn.email")}
                         value={form.email}
                         onChangeText={(text) => handleChange('email', text)}
                         icon={<Mail color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                     />
                     <CustomInput
-                        placeholderText='Password'
+                        placeholderText={t("signIn.password")}
                         value={form.password}
                         onChangeText={(text) => handleChange('password', text)}
                         icon={<LockKeyhole color={"#FFFFFF"} fill="#C5C5C7" strokeWidth={1}/>}
                         isSecurity={true}
                     />
                     <TouchableOpacity style={{alignSelf: 'flex-end', marginHorizontal: 30}} onPress={() => router.push("(auth)/forgot")}>
-                        <Text style={styles.forgetPassword}>Forgot Password</Text>
+                        <Text style={styles.forgetPassword}>{t("signIn.forgotpass")}</Text>
                     </TouchableOpacity>
                     <CustomButton
-                        title='Login'
+                        title={t("signIn.loginTitle")}
                         customStyle={{marginTop: 15}}
                         onPressed={signInClicked}
                     />
                 <Text style={styles.subText}>
-                    Don't have an account?{' '}
+                    {t("signIn.account")}{' '}
                     <TouchableOpacity onPress={() => router.push("(auth)/signup")}>
-                        <Text style={styles.signupText}>Sign up here</Text>
+                        <Text style={styles.signupText}>{t("signIn.signup")}</Text>
                     </TouchableOpacity>
                 </Text>
                 </View>

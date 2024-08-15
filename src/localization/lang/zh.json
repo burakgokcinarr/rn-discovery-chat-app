@@ -1,0 +1,57 @@
+{
+    "language": "更改语言",
+    "signIn": {
+        "loginTitle": "登录",
+        "email": "电子邮件",
+        "password": "密码",
+        "forgotpass": "忘记密码",
+        "account": "还没有账号？",
+        "signup": "注册"
+    },
+    "signUp": {
+        "signup": "注册",
+        "nickname": "昵称",
+        "email": "电子邮件",
+        "password": "密码",
+        "account": "已经有账号？",
+        "signin": "登录",
+        "validation": {
+            "min_username": "用户名至少为 {{min}} 个字符",
+            "max_username": "用户名最多为 {{max}} 个字符",
+            "required_username": "用户名是必填项",
+            "min_password": "密码至少为 {{min}} 个字符",
+            "max_password": "密码最多为 {{max}} 个字符",
+            "required_password": "密码是必填项",
+            "invalid_email": "无效的电子邮件",
+            "required_email": "电子邮件是必填项"
+        }
+    },
+    "forgot": {
+        "email": "电子邮件",
+        "reset_password": "重置密码",
+        "validation": {
+            "invalid_email": "无效的电子邮件",
+            "required_email": "电子邮件是必填项"
+        }
+    },
+    "contact": {
+        "title": "联系人"
+    },
+    "chat": {
+        "title": "消息"
+    },
+    "userCard": {
+        "message": "消息",
+        "lastSeen": "最后上线时间"
+    },
+    "chatScreen": {
+        "online": "在线",
+        "placeholder": "输入内容..."
+    },
+    "profile": {
+        "theme": "聊天气泡主题"
+    },
+    "logout": {
+        "logout": "退出登录"
+    }
+}

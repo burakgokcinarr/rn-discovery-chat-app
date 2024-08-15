@@ -1,0 +1,57 @@
+{
+    "language": "Mudar Idioma",
+    "signIn": {
+        "loginTitle": "Entrar",
+        "email": "E-mail",
+        "password": "Senha",
+        "forgotpass": "Esqueceu a senha",
+        "account": "Não tem uma conta?",
+        "signup": "Cadastrar-se"
+    },
+    "signUp": {
+        "signup": "Cadastrar-se",
+        "nickname": "Apelido",
+        "email": "E-mail",
+        "password": "Senha",
+        "account": "Já tem uma conta?",
+        "signin": "Entrar",
+        "validation": {
+            "min_username": "O nome de usuário deve ter pelo menos {{min}} caracteres",
+            "max_username": "O nome de usuário pode ter no máximo {{max}} caracteres",
+            "required_username": "Nome de usuário é obrigatório",
+            "min_password": "A senha deve ter pelo menos {{min}} caracteres",
+            "max_password": "A senha pode ter no máximo {{max}} caracteres",
+            "required_password": "A senha é obrigatória",
+            "invalid_email": "E-mail inválido",
+            "required_email": "E-mail é obrigatório"
+        }
+    },
+    "forgot": {
+        "email": "E-mail",
+        "reset_password": "Redefinir Senha",
+        "validation": {
+            "invalid_email": "E-mail inválido",
+            "required_email": "E-mail é obrigatório"
+        }
+    },
+    "contact": {
+        "title": "Contatos"
+    },
+    "chat": {
+        "title": "Mensagens"
+    },
+    "userCard": {
+        "message": "Mensagens",
+        "lastSeen": "Última vez visto"
+    },
+    "chatScreen": {
+        "online": "Online",
+        "placeholder": "Escreva algo..."
+    },
+    "profile": {
+        "theme": "Tema do balão de mensagem"
+    },
+    "logout": {
+        "logout": "Sair"
+    }
+}

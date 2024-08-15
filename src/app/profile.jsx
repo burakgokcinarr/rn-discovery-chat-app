@@ -9,14 +9,26 @@ import { X } from 'lucide-react-native'
 import { Font } from '../constants'
 import { setChatBubble } from '../redux/slices/chatTheme'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useTranslation } from 'react-i18next'
 
 const { width } = Dimensions.get('window');
 
+const flags = [
+  { component: "Turkey", lang: "tr", name: "Turkey" },
+  { component: "USA", lang: "en", name: "English" },
+  { component: "German", lang: "de", name: "German" },
+  { component: "Brasil", lang: "pt", name: "Brasil" },
+  { component: "China", lang: "zh", name: "China" }
+  
+];
+
 export default function profile() {
 
-  const dispatch    = useDispatch()
-  const navigation  = useNavigation()
-  const userInfo    = useSelector((state) => state.auth.user)
+  const { t, i18n }     = useTranslation()
+  const currentLanguage = i18n.language
+  const dispatch        = useDispatch()
+  const navigation      = useNavigation()
+  const userInfo        = useSelector((state) => state.auth.user)
   const [selectedColor, setSelectedColor] = useState("#FF9134");
   
   const colors = [
@@ -67,25 +79,50 @@ export default function profile() {
     }
   }
 
+  const changeLanguage = async (lang) => {
+    await AsyncStorage.setItem("language", lang);
+    i18n.changeLanguage(lang);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.emailText}>Message Bubble Color Theme</Text>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {colors.map((color, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.colorBox,
-              { backgroundColor: color },
-              selectedColor === color && styles.selectedColorBox
-            ]}
-            onPress={() => chatBubbleThemeSelect(color)}
-          />
-        ))}
-      </ScrollView>
+      <View style={{flex: 1, backgroundColor: 'green'}}>
+        <Text style={styles.emailText}>{t("profile.theme")}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {colors.map((color, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.colorBox,
+                { backgroundColor: color },
+                selectedColor === color && styles.selectedColorBox
+              ]}
+              onPress={() => chatBubbleThemeSelect(color)}
+            />
+          ))}
+        </ScrollView>
+      </View>
+      <View style={{flex: 1, backgroundColor: 'blue'}}>
+        <Text style={styles.text}>{t('language')}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.flagsContainer} >
+          {flags.map(({ component: Flag, lang, name }) => (
+            <TouchableOpacity
+              key={name}
+              onPress={() => changeLanguage(lang)}
+              style={[
+                styles.flag,
+                currentLanguage === lang && styles.activeFlag,
+                currentLanguage !== lang && styles.inactiveFlag,
+              ]}
+            >
+              <Text>{name}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
       <Text style={styles.emailText}>{userInfo?.email}</Text>
       <CustomButton
-        title={`Logout`}
+        title={t("logout.logout")}
         onPressed={logoutUser}
         customStyle={{backgroundColor: 'red', marginBottom: 50}}
       />
@@ -124,5 +161,22 @@ const styles = StyleSheet.create({
   },
   selectedColorBox: {
     borderColor: 'black', // Highlight the selected color with a border
+  },
+  flagsContainer: {
+    flexDirection: "row"
+  },
+  flag: {
+    paddingHorizontal: 10,
+  },
+  activeFlag: {
+    opacity: 1,
+  },
+  inactiveFlag: {
+    opacity: 0.5,
+  },
+  text: {
+    fontSize: 22,
+    lineHeight: 32,
+    marginTop: -6,
   },
 })

@@ -1,0 +1,57 @@
+{
+    "language": "Sprache ändern",
+    "signIn": {
+        "loginTitle": "Anmelden",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "forgotpass": "Passwort vergessen",
+        "account": "Haben Sie kein Konto?",
+        "signup": "Registrieren"
+    },
+    "signUp": {
+        "signup": "Registrieren",
+        "nickname": "Spitzname",
+        "email": "E-Mail",
+        "password": "Passwort",
+        "account": "Haben Sie schon ein Konto?",
+        "signin": "Anmelden",
+        "validation": {
+            "min_username": "Benutzername muss mindestens {{min}} Zeichen lang sein",
+            "max_username": "Benutzername darf höchstens {{max}} Zeichen lang sein",
+            "required_username": "Benutzername ist erforderlich",
+            "min_password": "Passwort muss mindestens {{min}} Zeichen lang sein",
+            "max_password": "Passwort darf höchstens {{max}} Zeichen lang sein",
+            "required_password": "Passwort ist erforderlich",
+            "invalid_email": "Ungültige E-Mail",
+            "required_email": "E-Mail ist erforderlich"
+        }
+    },
+    "forgot": {
+        "email": "E-Mail",
+        "reset_password": "Passwort zurücksetzen",
+        "validation": {
+            "invalid_email": "Ungültige E-Mail",
+            "required_email": "E-Mail ist erforderlich"
+        }
+    },
+    "contact": {
+        "title": "Kontakte"
+    },
+    "chat": {
+        "title": "Nachrichten"
+    },
+    "userCard": {
+        "message": "Nachrichten",
+        "lastSeen": "Zuletzt gesehen"
+    },
+    "chatScreen": {
+        "online": "Online",
+        "placeholder": "Schreibe etwas..."
+    },
+    "profile": {
+        "theme": "Nachrichtenblasen-Thema"
+    },
+    "logout": {
+        "logout": "Abmelden"
+    }
+}

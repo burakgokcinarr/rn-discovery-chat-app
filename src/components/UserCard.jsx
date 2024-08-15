@@ -22,7 +22,7 @@ export default function UserCard({ componentType = 1, userInfo = null, lastSeenD
                         {
                             componentType === 1 
                             ? (
-                                <Text style={styles.lastSeenText}>last seen recently</Text>
+                                <Text style={styles.lastSeenText}>{lastSeenDateTime || "--------"}</Text>
                             )
                             : (
                                 <Text style={styles.lastSeenText}>{lastMessage}</Text>

@@ -8,11 +8,13 @@ import { CustomAlert } from '../../utility/CustomAlert'
 import { Formik } from 'formik'
 import { ForgotPasswordSchema } from '../../utility/ValidateSchema'
 import { Font } from '../../constants'
+import { useTranslation } from 'react-i18next'
 
 const BG_IMAGE   = require('../../../assets/bg.webp');
 
 export default function forgot() {
 
+    const { t }      = useTranslation();
     const navigation = useNavigation()
 
     const initialValue = {
@@ -28,7 +30,6 @@ export default function forgot() {
             )
         })
     }, [])
-
 
     const reset = async(value) => {
         const { data, error } = await resetPasswordWithEmail(value.email)
@@ -48,13 +49,13 @@ export default function forgot() {
                 {({ handleChange, handleSubmit, errors, touched, isValid, values }) => (
                     <>
                         <CustomInput
-                            placeholderText='E-Mail'
+                            placeholderText={t("forgot.email")}
                             value={values.email}
                             onChangeText={handleChange('email')}
                         />
                         { errors.email && touched.email && <View style={{padding: 5, backgroundColor: '#FFFFFF'}}><Text style={styles.formErrorText}><TriangleAlert color="red" size={9}/> {errors.email}</Text></View> }
                         <CustomButton
-                            title='Reset Password'
+                            title={t("forgot.reset_password")}
                             customStyle={{marginTop: 15}}
                             onPressed={handleSubmit}
                         />

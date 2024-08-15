@@ -9,9 +9,11 @@ import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
 import { insertData, readData } from '../../api/Api'
 import { CustomAlert } from '../../utility/CustomAlert'
 import { supabase } from '../../lib/supabase'
+import { useTranslation } from 'react-i18next'
 
 export default function ChatScreen() {
 
+    const { t }             = useTranslation();
     const navigation        = useNavigation()
     const router            = useRouter()
     const { userId, user }  = useLocalSearchParams()
@@ -57,7 +59,7 @@ export default function ChatScreen() {
                 />
                 <View>
                     <Text style={styles.userNameTitle}>{userDetail.username}</Text>
-                    <Text style={styles.onlineText}>Online now</Text>
+                    <Text style={styles.onlineText}>{t("chatScreen.online")}</Text>
                 </View>
             </View>
         )
@@ -126,7 +128,7 @@ export default function ChatScreen() {
     }
 
     const onSend = useCallback(async(messages = []) => {
-        console.log(messages)
+        //console.log(messages)
         const { error } = await insertData('tbl_Messages', {
             sender_id: userInfo.id,
             receiver_id: userId,
@@ -140,9 +142,9 @@ export default function ChatScreen() {
 
     if (isLoading) {
         return (
-          <View style={styles.container}>
-            <ActivityIndicator size="small" color="#FF9134"/>
-          </View>
+            <View style={styles.container}>
+                <ActivityIndicator size="small" color="#FF9134"/>
+            </View>
         )
     }
     
@@ -177,7 +179,7 @@ export default function ChatScreen() {
                 messagesContainerStyle={{backgroundColor: '#FFFFFF'}}
                 showUserAvatar={false}
                 alwaysShowSend
-                placeholder='Type something...'
+                placeholder={t("chatScreen.placeholder")}
                 isTyping={false}
                 renderSend={(props)=>{
                     return (

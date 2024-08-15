@@ -1,0 +1,57 @@
+{
+    "language": "Change Language",
+    "signIn": {
+        "loginTitle": "Sign In",
+        "email": "Email",
+        "password": "Password",
+        "forgotpass": "Forgot Password",
+        "account": "Don't have an account?",
+        "signup": "Sign Up"
+    },
+    "signUp": {
+        "signup": "Sign Up",
+        "nickname": "Nickname",
+        "email": "Email",
+        "password": "Password",
+        "account": "Already have an account?",
+        "signin": "Sign In",
+        "validation": {
+            "min_username": "Username must be at least {{min}} characters",
+            "max_username": "Username can be at most {{max}} characters",
+            "required_username": "Username is required",
+            "min_password": "Password must be at least {{min}} characters",
+            "max_password": "Password can be at most {{max}} characters",
+            "required_password": "Password is required",
+            "invalid_email": "Invalid email",
+            "required_email": "Email is required"
+        }
+    },
+    "forgot": {
+        "email": "Email",
+        "reset_password": "Reset Password",
+        "validation": {
+            "invalid_email": "Invalid email",
+            "required_email": "Email is required"
+        }
+    },
+    "contact": {
+        "title": "Contacts"
+    },
+    "chat": {
+        "title": "Chats"
+    },
+    "userCard": {
+        "message": "Messages",
+        "lastSeen": "Last seen"
+    },
+    "chatScreen": {
+        "online": "Online",
+        "placeholder": "Type something..."
+    },
+    "profile": {
+        "theme": "Chat bubble theme"
+    },
+    "logout": {
+        "logout": "Log Out"
+    }
+}

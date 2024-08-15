@@ -1,0 +1,57 @@
+{
+    "language": "Dil Değiştir",
+    "signIn": {
+        "loginTitle": "Giriş Yap",
+        "email": "E-Posta",
+        "password": "Şifre",
+        "forgotpass": "Şifremi unuttum",
+        "account": "Hesabınız yok mu?",
+        "signup": "Kayıt Ol"
+    },
+    "signUp": {
+        "signup": "Kayıt Ol",
+        "nickname": "Takma Ad",
+        "email": "E-Posta",
+        "password": "Şifre",
+        "account": "Zaten hesabınız var mı?",
+        "signin": "Giriş Yap",
+        "validation": {
+            "min_username": "Kullanıcı adı en az {{min}} karakter olmalıdır",
+            "max_username": "Kullanıcı adı en fazla {{max}} karakter olabilir",
+            "required_username": "Kullanıcı adı gereklidir",
+            "min_password": "Şifre en az {{min}} karakter olmalıdır",
+            "max_password": "Şifre en fazla {{max}} karakter olabilir",
+            "required_password": "Şifre gereklidir",
+            "invalid_email": "Geçersiz e-posta",
+            "required_email": "E-posta gereklidir"
+        }
+    },
+    "forgot": {
+        "email": "E-Posta",
+        "reset_password": "Şifre Sıfırla",
+        "validation": {
+            "invalid_email": "Geçersiz e-posta",
+            "required_email": "E-posta gereklidir"
+        }
+    },
+    "contact": {
+        "title": "Kişiler"
+    },
+    "chat": {
+        "title": "Mesajlar"
+    },
+    "userCard": {
+        "message": "Mesajlar",
+        "lastSeen": "Son görülme tarihi"
+    },
+    "chatScreen": {
+        "online": "Çevrimiçi",
+        "placeholder": "Birşeyler yaz..."
+    },
+    "profile": {
+        "theme": "Mesaj baloncuk teması"
+    },
+    "logout": {
+        "logout": "Çıkış Yap"
+    } 
+}
