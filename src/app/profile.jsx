@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   selectedColorBox: {
-    borderColor: 'black', // Highlight the selected color with a border
+    borderColor: 'black',
   },
   flagsContainer: {
     flexDirection: "row"

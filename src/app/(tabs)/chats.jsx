@@ -5,17 +5,21 @@ import { useNavigation } from 'expo-router'
 import { readData } from '../../api/Api'
 import { UserCard } from '../../components'
 import { CustomAlert } from '../../utility/CustomAlert'
+import { useIsFocused } from '@react-navigation/native';
 
 export default function chats() {
 
+  const isFocused  = useIsFocused();
   const navigation = useNavigation();
   const dispatch   = useDispatch();
   const userInfo   = useSelector((state) => state.auth.user)
   const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
-    allChatsData(); 
-  }, [])
+    if (isFocused) {
+      allChatsData(); 
+    }
+  }, [isFocused])
 
   const allChatsData = async() => {
     const filter = [ { type: 'or', value: `sender_id.eq.${userInfo.id},receiver_id.eq.${userInfo.id}`} ]
