@@ -46,7 +46,10 @@
     },
     "chatScreen": {
         "online": "Online",
-        "placeholder": "Schreibe etwas..."
+        "placeholder": "Schreibe etwas...",
+        "cancel": "Abbrechen",
+        "delete": "Nachricht löschen",
+        "copy": "Kopieren"
     },
     "profile": {
         "theme": "Nachrichtenblasen-Thema",

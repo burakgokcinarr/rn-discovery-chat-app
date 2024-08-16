@@ -46,7 +46,10 @@
     },
     "chatScreen": {
         "online": "在线",
-        "placeholder": "输入内容..."
+        "placeholder": "输入内容...",
+        "cancel": "取消",
+        "delete": "删除消息",
+        "copy": "复制"
     },
     "profile": {
         "theme": "聊天气泡主题",

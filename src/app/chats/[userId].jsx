@@ -6,10 +6,12 @@ import { Image } from 'expo-image'
 import { Font } from '../../constants'
 import { useSelector } from 'react-redux'
 import { GiftedChat, Bubble, Send } from 'react-native-gifted-chat'
-import { insertData, readData } from '../../api/Api'
+import { deleteData, insertData, readData } from '../../api/Api'
 import { CustomAlert } from '../../utility/CustomAlert'
 import { supabase } from '../../lib/supabase'
 import { useTranslation } from 'react-i18next'
+import { useActionSheet } from '@expo/react-native-action-sheet';
+import * as Clipboard from 'expo-clipboard';
 
 export default function ChatScreen() {
 
@@ -22,6 +24,11 @@ export default function ChatScreen() {
     const chatThemeColor    = useSelector((state) => state.chatTheme.chatBubble)
     const [messages, setMessages]   = useState([])
     const [isLoading, setIsLoading] = useState(true);
+    const { showActionSheetWithOptions } = useActionSheet();
+
+    const options = [t("chatScreen.delete"), t("chatScreen.copy"), t("chatScreen.cancel")];
+    const destructiveButtonIndex = 0;
+    const cancelButtonIndex      = 2;
     
     useEffect(() => {
         navigation.setOptions({
@@ -140,6 +147,29 @@ export default function ChatScreen() {
         else setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
     }, [])
 
+    const onLogPressMessage = (context, message) => {
+        //console.log(message)
+        if (userInfo.id === message.user._id) {
+            showActionSheetWithOptions({
+                options,
+                cancelButtonIndex,
+                destructiveButtonIndex
+            }, async(selectedIndex) => {
+                switch (selectedIndex) {
+                    case destructiveButtonIndex:
+                        const { error } = await deleteData("tbl_Messages", "id", message._id)
+                        if (error) return CustomAlert(false, "DANGER", "Error", error.code + " - " + error.message, "Ok", 2000)
+                        else getAllMessage()
+                    break;
+                    case 1:
+                        await Clipboard.setStringAsync(message.text);
+                    case cancelButtonIndex:
+                    // Canceled
+                }}
+            );
+        }
+    }
+
     if (isLoading) {
         return (
             <View style={styles.container}>
@@ -181,6 +211,7 @@ export default function ChatScreen() {
                 alwaysShowSend
                 placeholder={t("chatScreen.placeholder")}
                 isTyping={false}
+                onLongPress={onLogPressMessage}
                 renderSend={(props)=>{
                     return (
                         <Send {...props} containerStyle={styles.sendButton}>

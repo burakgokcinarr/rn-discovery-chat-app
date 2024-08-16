@@ -46,7 +46,9 @@
     },
     "chatScreen": {
         "online": "Online",
-        "placeholder": "Escreva algo..."
+        "placeholder": "Escreva algo...",
+        "cancel": "Cancelar",
+        "delete": "Excluir mensagem"
     },
     "profile": {
         "theme": "Tema do balão de mensagem",
@@ -54,7 +56,8 @@
         "en": "Inglês",
         "de": "Alemão",
         "pt": "Português",
-        "zh": "Chinês"
+        "zh": "Chinês",
+        "copy": "Copiar"
     },
     "logout": {
         "logout": "Sair"

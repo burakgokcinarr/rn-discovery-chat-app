@@ -103,7 +103,7 @@ export default function profile() {
     <View style={styles.container}>
       <View style={{gap: 5}}>
         <Text style={styles.emailText}>{t("profile.theme")}</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled ref={scrollViewRef}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={scrollViewRef}>
           {colors.map((color, index) => (
             <TouchableOpacity
               key={index}

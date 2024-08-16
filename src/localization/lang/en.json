@@ -46,7 +46,10 @@
     },
     "chatScreen": {
         "online": "Online",
-        "placeholder": "Type something..."
+        "placeholder": "Type something...",
+        "cancel": "Cancel",
+        "delete": "Delete message",
+        "copy": "Copy"
     },
     "profile": {
         "theme": "Chat bubble theme",

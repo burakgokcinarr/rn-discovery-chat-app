@@ -46,7 +46,10 @@
     },
     "chatScreen": {
         "online": "Çevrimiçi",
-        "placeholder": "Birşeyler yaz..."
+        "placeholder": "Birşeyler yaz...",
+        "cancel": "Vazgeç",
+        "delete": "Mesajı sil",
+        "copy": "Kopyala"
     },
     "profile": {
         "theme": "Mesaj baloncuk teması",
