@@ -49,7 +49,12 @@
         "placeholder": "Type something..."
     },
     "profile": {
-        "theme": "Chat bubble theme"
+        "theme": "Chat bubble theme",
+        "tr": "Turkish",
+        "en": "English",
+        "de": "German",
+        "pt": "Portuguese",
+        "zh": "Chinese"
     },
     "logout": {
         "logout": "Log Out"

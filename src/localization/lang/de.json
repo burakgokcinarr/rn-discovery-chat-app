@@ -49,7 +49,12 @@
         "placeholder": "Schreibe etwas..."
     },
     "profile": {
-        "theme": "Nachrichtenblasen-Thema"
+        "theme": "Nachrichtenblasen-Thema",
+        "tr": "Türkisch",
+        "en": "Englisch",
+        "de": "Deutsch",
+        "pt": "Portugiesisch",
+        "zh": "Chinesisch"
     },
     "logout": {
         "logout": "Abmelden"

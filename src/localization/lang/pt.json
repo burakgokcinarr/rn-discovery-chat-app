@@ -49,7 +49,12 @@
         "placeholder": "Escreva algo..."
     },
     "profile": {
-        "theme": "Tema do balão de mensagem"
+        "theme": "Tema do balão de mensagem",
+        "tr": "Turco",
+        "en": "Inglês",
+        "de": "Alemão",
+        "pt": "Português",
+        "zh": "Chinês"
     },
     "logout": {
         "logout": "Sair"

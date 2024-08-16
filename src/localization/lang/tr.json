@@ -49,7 +49,12 @@
         "placeholder": "Birşeyler yaz..."
     },
     "profile": {
-        "theme": "Mesaj baloncuk teması"
+        "theme": "Mesaj baloncuk teması",
+        "tr": "Türkçe",
+        "en": "İngilizce",
+        "de": "Almanca",
+        "pt": "Portekizce",
+        "zh": "Çince"
     },
     "logout": {
         "logout": "Çıkış Yap"

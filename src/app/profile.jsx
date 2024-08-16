@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { userLogOut } from '../api/Api'
 import { router, useNavigation } from 'expo-router'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { logout } from '../redux/slices/authSlice'
 import { CustomButton } from '../components'
 import { X } from 'lucide-react-native'
@@ -24,11 +24,11 @@ const flags = [
 
 export default function profile() {
 
+  const scrollViewRef   = useRef(null);
   const { t, i18n }     = useTranslation()
   const currentLanguage = i18n.language
   const dispatch        = useDispatch()
   const navigation      = useNavigation()
-  const userInfo        = useSelector((state) => state.auth.user)
   const [selectedColor, setSelectedColor] = useState("#FF9134");
   
   const colors = [
@@ -50,6 +50,17 @@ export default function profile() {
     getChatBubbleColor();
   }, [])
 
+  useEffect(() => {
+    if (selectedColor !== null) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({
+          x: colors.indexOf(selectedColor) * (width/5), // Adjust according to item width
+          animated: true,
+        });
+      }, 0);
+    }
+  }, [selectedColor]);
+
   const getChatBubbleColor = async() => {
     try {
       const value = await AsyncStorage.getItem('bubble');
@@ -69,8 +80,12 @@ export default function profile() {
     }
   }
 
-  const chatBubbleThemeSelect = async(color) => {
-    setSelectedColor(color)
+  const chatBubbleThemeSelect = async(color, index) => {
+    setSelectedColor(color);
+    scrollViewRef.current?.scrollTo({
+      x: index * (width/5),
+      animated: true,
+    });
     try {
       await AsyncStorage.setItem('bubble', color)
       dispatch(setChatBubble(color))
@@ -86,9 +101,9 @@ export default function profile() {
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 1, backgroundColor: 'green'}}>
+      <View style={{gap: 5}}>
         <Text style={styles.emailText}>{t("profile.theme")}</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled ref={scrollViewRef}>
           {colors.map((color, index) => (
             <TouchableOpacity
               key={index}
@@ -97,15 +112,15 @@ export default function profile() {
                 { backgroundColor: color },
                 selectedColor === color && styles.selectedColorBox
               ]}
-              onPress={() => chatBubbleThemeSelect(color)}
+              onPress={() => chatBubbleThemeSelect(color, index)}
             />
           ))}
         </ScrollView>
       </View>
-      <View style={{flex: 1, backgroundColor: 'blue'}}>
+      <View style={{gap: 5, alignItems: 'center', justifyContent: 'center'}}>
         <Text style={styles.text}>{t('language')}</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.flagsContainer} >
-          {flags.map(({ component: Flag, lang, name }) => (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} pagingEnabled>
+          {flags.map(({ lang, name }) => (
             <TouchableOpacity
               key={name}
               onPress={() => changeLanguage(lang)}
@@ -115,16 +130,15 @@ export default function profile() {
                 currentLanguage !== lang && styles.inactiveFlag,
               ]}
             >
-              <Text>{name}</Text>
+              <Text style={styles.text}>{t(`profile.${lang}`)}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
-      <Text style={styles.emailText}>{userInfo?.email}</Text>
       <CustomButton
         title={t("logout.logout")}
         onPressed={logoutUser}
-        customStyle={{backgroundColor: 'red', marginBottom: 50}}
+        customStyle={{backgroundColor: 'red', marginBottom: 50, alignSelf: 'center', marginTop: 15}}
       />
     </View>
   )
@@ -133,7 +147,6 @@ export default function profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     marginVertical: 10,
     gap: 10
   },
@@ -148,11 +161,12 @@ const styles = StyleSheet.create({
   emailText: {
     fontFamily: Font.medium,
     fontSize: 16,
-    color: '#000000'
+    color: '#000000',
+    textAlign: 'center'
   },
   colorBox: {
-    width: width/4,
-    height: width/4,
+    width: width/5,
+    height: width/5,
     borderRadius: 10,
     marginBottom: 10,
     borderWidth: 5,
@@ -170,13 +184,17 @@ const styles = StyleSheet.create({
   },
   activeFlag: {
     opacity: 1,
+    borderWidth: 1,
+    padding: 3,
+    borderRadius: 8
   },
   inactiveFlag: {
     opacity: 0.5,
   },
   text: {
-    fontSize: 22,
-    lineHeight: 32,
-    marginTop: -6,
+    fontFamily: Font.medium,
+    fontSize: 16,
+    color: '#000000',
+    textAlign: 'center'
   },
 })
