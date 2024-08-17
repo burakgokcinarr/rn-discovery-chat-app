@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userCheckSessionControl } from '../api/Api'
 import { setSession } from '../redux/slices/authSlice'
 import { ActivityIndicator, View } from 'react-native'
+import { CustomAlert } from '../utility/CustomAlert'
 import "../localization/_i18n";
 
 export default function index() {
@@ -14,9 +15,15 @@ export default function index() {
 
     useEffect(() => {
         const checkSession = async() => {
-            const data = await userCheckSessionControl();
-            dispatch(setSession(data.user));
-            setLoading(false)
+            try { 
+                const { user, error } = await userCheckSessionControl();
+                if (error) return CustomAlert(true, "DANGER", error.code, error.message)
+                else dispatch(setSession(user));
+            } catch (error) {
+                //
+            } finally {
+                setLoading(false)
+            }
         }
 
         checkSession()
